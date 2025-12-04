@@ -92,35 +92,51 @@ symbols = {
 ascii_map = []
 for row in terrain:
     ascii_map.append("".join(symbols[cell] for cell in row))
-for line in ascii_map:
-    print(line)
+# for line in ascii_map:
+#     print(line)
 
 # Camera view of the map with player movement
 player = {
     "x": width // 2,
     "y": height // 2,
-    "symbol": "/0\\"}
+    "symbol": "@"}
 view_width = 20
 view_height = 12
 
-camera_left = player["x"] - view_width //2
-camera_right  = camera_left + view_width
-camera_top    = player["y"] - view_height // 2
-camera_bottom = camera_top + view_height
+def cam_movement():
+    camera_left = player["x"] - view_width //2
+    camera_right  = camera_left + view_width
+    camera_top    = player["y"] - view_height // 2
+    camera_bottom = camera_top + view_height
 
-for ty in range(camera_top, camera_bottom):
-    row_str = ""
-    for tx in range(camera_left, camera_right):
-        if tx < 0 or tx >= width or ty < 0 or ty >= height:
-            row_str += " "
-            continue
-        if tx == player["x"] and ty == player["y"]:
-            row_str += player["symbol"]
-        else:
-            row_str += symbols[terrain[ty][tx]]
-    print(row_str)
+    print("\n Camera View:")
+    for ty in range(camera_top, camera_bottom):
+        row_str = ""
+        for tx in range(camera_left, camera_right):
+            if tx < 0 or tx >= width or ty < 0 or ty >= height:
+                row_str += " "
+                continue
+            if tx == player["x"] and ty == player["y"]:
+                row_str += player["symbol"]
+            else:
+                row_str += symbols[terrain[ty][tx]]
+        print(row_str)
 
-#  if command == "w" and player["y"] > 0:
-#      player["y"] -= 1
-
-# os.system("cls" if windows else "clear")
+cam_movement()
+while True:
+    command = input("To move, press WASD and Q to quit: ").lower()
+    if command == "w" and player["y"] > 0:
+        player["y"] -= 1
+    elif command == "s" and player["y"] < height -1:
+        player["y"] +=1
+    elif command == "a" and player["x"] > 0:
+        player["x"] -=1
+    elif command == "d" and player["x"] < width -1:
+        player["x"] +=1
+    elif command == "q":
+        break
+    else:
+        print("Not a valid command.")
+        continue
+    os.system("cls" if os.name == "nt" else "clear")
+    cam_movement()
