@@ -1,4 +1,4 @@
-from noise import gen_noise_map, classify, bio_symbols
+from noise import gen_noise_map, classify, bio_
 
 class World:
     def __init__(self, width, height):
@@ -13,4 +13,4 @@ class World:
         return terrain
     
     def get_symbol(self,x,y):
-        return bio_symbols[self.map[y][x]]
+        return bio_[self.map[y][x]]

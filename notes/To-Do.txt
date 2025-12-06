@@ -1,5 +1,5 @@
-1. update the design.md
-2. add instruction what goes where
+1. reached phase 2
+2. after completing current set of phases fix TypeError: can only concatenate str (not "dict") to str
 3. convert it to pygame
 4. get good idea for 2d design
 5. get graphical mats

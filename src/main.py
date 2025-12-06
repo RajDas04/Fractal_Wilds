@@ -5,6 +5,8 @@ world = World(50,50)
 player = {"x":25,"y":25,"symbol":"()"}
 view_width = 30
 view_height = 12
+RENDER_MODE = "pygame"
+
 
 def cam_render():
     camera_left = player["x"] - view_width //2
