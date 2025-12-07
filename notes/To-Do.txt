@@ -1,5 +1,5 @@
-1. reached phase 2
-2. after completing current set of phases fix TypeError: can only concatenate str (not "dict") to str
+1. create pygame window
+2. where the pygame window creation will go
 3. convert it to pygame
 4. get good idea for 2d design
 5. get graphical mats

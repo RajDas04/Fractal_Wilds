@@ -13,4 +13,5 @@ class World:
         return terrain
     
     def get_symbol(self,x,y):
-        return bio_[self.map[y][x]]
+        biome = self.map[y][x] 
+        return bio_[biome]["symbol"]

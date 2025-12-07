@@ -1,12 +1,20 @@
+from render import Renderer
 from world import World
 import os
 
 world = World(50,50)
-player = {"x":25,"y":25,"symbol":"()"}
+player = {"x":25,"y":25,"symbol":"()","color":"#ff0000"}
 view_width = 30
 view_height = 12
 RENDER_MODE = "pygame"
 
+TILE_SIZE = 24
+VIEW_WIDTH = 30
+VIEW_HEIGHT = 15
+
+USE_PYGAME = False  # change to True when ready
+
+Renderer.draw(world, player)
 
 def cam_render():
     camera_left = player["x"] - view_width //2
@@ -26,7 +34,13 @@ def cam_render():
             else:
                 row_str += world.get_symbol(x, y)
         print(row_str)
-
+"""
+for each tile inside the viewport:
+    convert tile coordinates → screen pixel position
+    fill rectangle with biome color
+draw player on top
+flip display
+"""
 cam_render()
 while True:
     command = input("To move, press WASD and Q to quit: ").lower()

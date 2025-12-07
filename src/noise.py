@@ -27,8 +27,8 @@ def classify(value):
     return "mountain"
 
 bio_ = {
-    "water":    {"symbol": "~", "color": (30,50,160)},
-    "sand":     {"symbol": ".", "color": (210,190,120)},
-    "grass":    {"symbol": "T", "color": (50,180,60)},
-    "forest":   {"symbol": "^", "color": (16,100,30)},
-    "mountain": {"symbol": "M", "color": (130,130,130)}}
+    "water":    {"symbol": "~", "color": "#00d7d7"},
+    "sand":     {"symbol": ".", "color": "#e1e100"},
+    "grass":    {"symbol": "T", "color": "#00ca00"},
+    "forest":   {"symbol": "^", "color": "#006c00"},
+    "mountain": {"symbol": "M", "color": "#c0c0c0"}}
