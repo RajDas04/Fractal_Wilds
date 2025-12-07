@@ -1,5 +1,5 @@
 1. create pygame window
-2. where the pygame window creation will go
+2. where the render will link to either world or main
 3. convert it to pygame
 4. get good idea for 2d design
 5. get graphical mats
