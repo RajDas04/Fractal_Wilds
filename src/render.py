@@ -1,5 +1,6 @@
 import pygame
 pygame.font.init()
+pygame.init()
 
 class Renderer:
     def __init__(self, tile_size, view_width, view_height):
@@ -9,11 +10,10 @@ class Renderer:
         # pygame setup happens here
         width = self.tile_size * self.view_width
         height = self.tile_size * self.view_height
-        win = pygame.display.set_mode((width, height))
+        self.win = pygame.display.set_mode((width, height))
         pygame.display.set_caption("Fractal Wilds")
         font = pygame.font.SysFont("rockwell", 20)
 
     def draw(self, world, player):
         # draw tiles and player
-        
-        pass
+        self.win.blit(0, 0)
