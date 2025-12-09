@@ -70,3 +70,5 @@
 -> drawing the player
 
 -> refreshing the screen
+
+##### __pycache__ folder is there just for cache to run faster
