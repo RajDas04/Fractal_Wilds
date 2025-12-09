@@ -34,13 +34,7 @@ def cam_render():
             else:
                 row_str += world.get_symbol(x, y)
         print(row_str)
-"""
-for each tile inside the viewport:
-    convert tile coordinates → screen pixel position
-    fill rectangle with biome color
-draw player on top
-flip display
-"""
+
 cam_render()
 while True:
     command = input("To move, press WASD and Q to quit: ").lower()
