@@ -6,15 +6,15 @@ world = World(50,50)
 player = {"x":25,"y":25,"symbol":"()","color":"#ff0000"}
 view_width = 30
 view_height = 12
-RENDER_MODE = "pygame"
 
 TILE_SIZE = 24
 VIEW_WIDTH = 30
 VIEW_HEIGHT = 15
 
-USE_PYGAME = False  # change to True when ready
+USE_PYGAME = True  # change to True when ready
 
-Renderer.draw(world, player)
+renderer = Renderer(TILE_SIZE, VIEW_WIDTH, VIEW_HEIGHT)
+renderer.draw(world, player)
 
 def cam_render():
     camera_left = player["x"] - view_width //2
@@ -35,21 +35,22 @@ def cam_render():
                 row_str += world.get_symbol(x, y)
         print(row_str)
 
-cam_render()
-while True:
-    command = input("To move, press WASD and Q to quit: ").lower()
-    if command == "w" and player["y"] > 0:
-        player["y"] -= 1
-    elif command == "s" and player["y"] < world.height -1:
-        player["y"] +=1
-    elif command == "a" and player["x"] > 0:
-        player["x"] -=1
-    elif command == "d" and player["x"] < world.width -1:
-        player["x"] +=1
-    elif command == "q":
-        break
-    else:
-        print("Invalid Command...")
-        continue
-    os.system("cls" if os.name == "nt" else "clear")
+if USE_PYGAME == False:
     cam_render()
+    while True:
+        command = input("To move, press WASD and Q to quit: ").lower()
+        if command == "w" and player["y"] > 0:
+            player["y"] -= 1
+        elif command == "s" and player["y"] < world.height -1:
+            player["y"] +=1
+        elif command == "a" and player["x"] > 0:
+            player["x"] -=1
+        elif command == "d" and player["x"] < world.width -1:
+            player["x"] +=1
+        elif command == "q":
+            break
+        else:
+            print("Invalid Command...")
+            continue
+        os.system("cls" if os.name == "nt" else "clear")
+        cam_render()
