@@ -31,4 +31,7 @@ bio_ = {
     "sand":     {"symbol": ".", "color": "#e1e100"},
     "grass":    {"symbol": "T", "color": "#00ca00"},
     "forest":   {"symbol": "^", "color": "#006c00"},
-    "mountain": {"symbol": "M", "color": "#c0c0c0"}}
+    "mountain": {"symbol": "M", "color": "#c0c0c0"},
+    "player":   {"symbol": "()", "color": "#ff0000"}}
+
+player_ = "#ff0000"

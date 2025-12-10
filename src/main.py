@@ -3,7 +3,7 @@ from world import World
 import os
 
 world = World(50,50)
-player = {"x":25,"y":25,"symbol":"()","color":"#ff0000"}
+player = {"x":25,"y":25,"symbol":"()"}
 view_width = 30
 view_height = 12
 

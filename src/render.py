@@ -1,5 +1,5 @@
 import pygame
-from noise import bio_
+from noise import bio_, player_
 
 class Renderer:
     def __init__(self, tile_size, view_width, view_height):
@@ -15,7 +15,7 @@ class Renderer:
         self.font = pygame.font.SysFont("rockwell", 20)
 
     def draw(self, world, player):
-        self.win.fill((0, 0, 0))
+        #self.win.fill((0, 0, 0))
         cam_left = player["x"] - self.view_width //2
         cam_top = player["y"] - self.view_height // 2
 
@@ -33,10 +33,16 @@ class Renderer:
                 screen_x = col * self.tile_size
                 screen_y = row * self.tile_size
                 pygame.draw.rect(self.win, color, (screen_x, screen_y, self.tile_size, self.tile_size))
-        
+
+                player_screen_x = (player["x"] - cam_left) * self.tile_size
+                player_screen_y = (player["y"] - cam_top) * self.tile_size
+                pygame.draw.rect(self.win,player_,
+                                 (player_screen_x, player_screen_y, self.tile_size, self.tile_size))
+
+        #pygame.display.flip()
         pygame.display.update()
         run = True
         while run:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+                if event.type == pygame.QUIT:
                     quit()
