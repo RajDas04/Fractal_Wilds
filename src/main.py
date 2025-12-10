@@ -1,8 +1,9 @@
 from render import Renderer
 from world import World
 import os
+import pygame
 
-world = World(50,50)
+world = World(200,200)
 player = {"x":25,"y":25,"symbol":"()"}
 view_width = 30
 view_height = 12
@@ -12,9 +13,6 @@ VIEW_WIDTH = 30
 VIEW_HEIGHT = 15
 
 USE_PYGAME = True  # change to True when ready
-
-renderer = Renderer(TILE_SIZE, VIEW_WIDTH, VIEW_HEIGHT)
-renderer.draw(world, player)
 
 def cam_render():
     camera_left = player["x"] - view_width //2
@@ -54,3 +52,23 @@ if USE_PYGAME == False:
             continue
         os.system("cls" if os.name == "nt" else "clear")
         cam_render()
+
+if USE_PYGAME == True:
+    renderer = Renderer(TILE_SIZE, VIEW_WIDTH, VIEW_HEIGHT)  
+    clock = pygame.time.Clock()
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        clock.tick(45)
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_w] and player["y"] > 0:
+            player["y"] -= 1
+        if keys[pygame.K_s] and player["y"] < world.height -1:
+            player["y"] += 1
+        if keys[pygame.K_a] and player["x"] > 0:
+            player["x"] -= 1
+        if keys[pygame.K_d] and player["x"] < world.width -1:
+            player["x"] += 1
+        renderer.draw(world, player)
