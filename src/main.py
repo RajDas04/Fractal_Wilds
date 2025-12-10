@@ -8,11 +8,11 @@ player = {"x":25,"y":25,"symbol":"()"}
 view_width = 30
 view_height = 12
 
-TILE_SIZE = 24
-VIEW_WIDTH = 30
-VIEW_HEIGHT = 15
+TILE_SIZE = 14
+VIEW_WIDTH = 80
+VIEW_HEIGHT = 40
 
-USE_PYGAME = True  # change to True when ready
+USE_PYGAME = True  # change to True to use pygame and False to use terminal ASCII
 
 def cam_render():
     camera_left = player["x"] - view_width //2
@@ -61,7 +61,7 @@ if USE_PYGAME == True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        clock.tick(45)
+        clock.tick(25)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] and player["y"] > 0:
             player["y"] -= 1

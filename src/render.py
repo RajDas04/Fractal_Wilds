@@ -39,5 +39,5 @@ class Renderer:
                 pygame.draw.rect(self.win,player_,
                                  (player_screen_x, player_screen_y, self.tile_size, self.tile_size))
 
-        #pygame.display.flip()
-        pygame.display.update()
+        pygame.display.flip()
+        #pygame.display.update()
