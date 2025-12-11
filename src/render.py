@@ -27,6 +27,7 @@ class Renderer:
             self.tile_images[key]  = pygame.transform.scale(self.tile_images[key], (self.tile_size, self.tile_size))
 
     def draw(self, world, player):
+        self.win.fill((0,0,0))
         cam_left = player["x"] - self.view_width //2
         cam_top = player["y"] - self.view_height // 2
 

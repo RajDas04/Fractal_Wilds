@@ -1,6 +1,20 @@
 # Design Choices:
 ### biome rules
--> 
+-> Water
+##### can't walk on it
+##### or: slows movement
+##### or: requires a boat later
+-> Sand
+##### walkable
+##### slightly slow? optional
+-> Grass
+##### normal movement
+-> Forest
+##### walkable but slower
+##### or: reduces visibility later
+-> Mountain
+##### not walkable
+##### or: walkable later with "climbing gear"
 
 ### movement ideas
 -> No full regeneration needed.
