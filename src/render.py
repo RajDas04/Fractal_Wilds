@@ -41,18 +41,12 @@ class Renderer:
                     continue
 
                 biome = world.map[world_y][world_x]
-                color = bio_[biome]["color"]
                 screen_x = col * self.tile_size
                 screen_y = row * self.tile_size
-                #pygame.draw.rect(self.win, color, (screen_x, screen_y, self.tile_size, self.tile_size))
                 self.win.blit(self.tile_images[biome], (screen_x, screen_y))
 
                 player_screen_x = (player["x"] - cam_left) * self.tile_size
                 player_screen_y = (player["y"] - cam_top) * self.tile_size
-                #pygame.draw.rect(self.win,player_,
-                                 #(player_screen_x, player_screen_y, self.tile_size, self.tile_size))
                 self.win.blit(self.player_image, (player_screen_x, player_screen_y))
 
-
         pygame.display.flip()
-        #pygame.display.update()
