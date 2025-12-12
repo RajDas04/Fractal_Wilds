@@ -54,65 +54,44 @@ if USE_PYGAME == False: # ASCII map
             cam_render()
 
 if USE_PYGAME == True: # Pygame 
-    # def try_move(dx, dy):
-    #     new_x = player["x"] + dx
-    #     new_y = player["y"] + dy
+    def try_move(dx, dy):
+        new_x = player["x"] + dx
+        new_y = player["y"] + dy
 
-    #     if biome not in ("water", "mountain"):
-    #         return
-
-    #     biome = world.map[new_y][new_x]
-
-    #     player["x"] = new_x
-    #     player["y"] = new_y
-
+        if 0 <= new_x < world.width and 0 <= new_y < world.height:
+            biome = world.map[new_y][new_x]
+        if biome not in ("water", "mountain"):
+            player["x"] = new_x
+            player["y"] = new_y
 
     renderer = Renderer(TILE_SIZE, VIEW_WIDTH, VIEW_HEIGHT)  
     clock = pygame.time.Clock()
     current_time = pygame.time.get_ticks()
-    move_cooldown = 150 # ms
+    move_cooldown = 100 # ms
     last_move_time = 0
     run = True
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        #clock.tick(25)
+        clock.tick(30)
         keys = pygame.key.get_pressed()
         new_x = player["x"]
         new_y = player["y"]
         current_time = pygame.time.get_ticks()
 
         if current_time - last_move_time > move_cooldown:
-            # check keys
-            if keys[pygame.K_w]:
+            if keys[pygame.K_w] and player["y"] > 0:
                 try_move(0, -1)
                 last_move_time = current_time
-
-            elif keys[pygame.K_s]:
+            if keys[pygame.K_s] and player["y"] < world.height -1:
                 try_move(0, +1)
                 last_move_time = current_time
-
-            elif keys[pygame.K_a]:
+            if keys[pygame.K_a] and player["x"] > 0:
                 try_move(-1, 0)
                 last_move_time = current_time
-
-            elif keys[pygame.K_d]:
+            if keys[pygame.K_d] and player["x"] < world.width -1:
                 try_move(+1, 0)
                 last_move_time = current_time
 
-        if keys[pygame.K_w] and player["y"] > 0:
-            new_y -= 1
-        if keys[pygame.K_s] and player["y"] < world.height -1:
-            new_y += 1
-        if keys[pygame.K_a] and player["x"] > 0:
-            new_x -= 1
-        if keys[pygame.K_d] and player["x"] < world.width -1:
-            new_x += 1
-        if 0 <= new_x < world.width and 0 <= new_y < world.height:
-            biome = world.map[new_y][new_x]
-
-        if biome not in ("water", "mountain"):
-            player["x"] = new_x
-            player["y"] = new_y
         renderer.draw(world, player)
