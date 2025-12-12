@@ -2,13 +2,14 @@ from render import Renderer
 from world import World
 import os
 import pygame
+import random
 
-world = World(500,500)
+world = World(250,250)
 player = {"x":25,"y":25,"symbol":"()"}
 view_width = 30
 view_height = 12
 
-TILE_SIZE = 35
+TILE_SIZE = 30
 VIEW_WIDTH = 35
 VIEW_HEIGHT = 18
 
@@ -54,44 +55,46 @@ if USE_PYGAME == False: # ASCII map
             cam_render()
 
 if USE_PYGAME == True: # Pygame 
-    def try_move(dx, dy):
-        new_x = player["x"] + dx
-        new_y = player["y"] + dy
-
+    def wander(creature):
+        dx, dy = random.choice([(1,0),(-1,0),(0,1),(0,-1)]) # pick random direction
+        new_x = creature["x"] + dx
+        new_y = creature["y"] + dy
         if 0 <= new_x < world.width and 0 <= new_y < world.height:
             biome = world.map[new_y][new_x]
-        if biome not in ("water", "mountain"):
-            player["x"] = new_x
-            player["y"] = new_y
+            if biome not in ("water", "mountain"):
+                creature["x"] = new_x
+                creature["y"] = new_y
 
     renderer = Renderer(TILE_SIZE, VIEW_WIDTH, VIEW_HEIGHT)  
     clock = pygame.time.Clock()
-    current_time = pygame.time.get_ticks()
-    move_cooldown = 100 # ms
-    last_move_time = 0
+    creatures = world.creatures
     run = True
     while run:
+        clock.tick(10)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        clock.tick(30)
         keys = pygame.key.get_pressed()
         new_x = player["x"]
         new_y = player["y"]
-        current_time = pygame.time.get_ticks()
 
-        if current_time - last_move_time > move_cooldown:
-            if keys[pygame.K_w] and player["y"] > 0:
-                try_move(0, -1)
-                last_move_time = current_time
-            if keys[pygame.K_s] and player["y"] < world.height -1:
-                try_move(0, +1)
-                last_move_time = current_time
-            if keys[pygame.K_a] and player["x"] > 0:
-                try_move(-1, 0)
-                last_move_time = current_time
-            if keys[pygame.K_d] and player["x"] < world.width -1:
-                try_move(+1, 0)
-                last_move_time = current_time
+        for c in creatures:
+            wander(c)
+
+        if keys[pygame.K_w] and player["y"] > 0:
+            new_y -= 1
+        if keys[pygame.K_s] and player["y"] < world.height - 1:
+            new_y += 1
+        if keys[pygame.K_a] and player["x"] > 0:
+            new_x -= 1
+        if keys[pygame.K_d] and player["x"] < world.width - 1:
+            new_x += 1
+        if keys[pygame.K_q]:
+            break
+        if 0 <= new_x < world.width and 0 <= new_y < world.height:
+            biome = world.map[new_y][new_x]
+            if biome not in ("water", "mountain"):
+                player["x"] = new_x
+                player["y"] = new_y
 
         renderer.draw(world, player)

@@ -45,8 +45,13 @@ class Renderer:
                 screen_y = row * self.tile_size
                 self.win.blit(self.tile_images[biome], (screen_x, screen_y))
 
-                player_screen_x = (player["x"] - cam_left) * self.tile_size
-                player_screen_y = (player["y"] - cam_top) * self.tile_size
-                self.win.blit(self.player_image, (player_screen_x, player_screen_y))
+        for c in world.creatures:
+            sx = (c["x"] - cam_left) * self.tile_size
+            sy = (c["y"] - cam_top) * self.tile_size
+            pygame.draw.circle(self.win, c["color"], (sx + 12, sy + 12), 6)
+
+        player_screen_x = (player["x"] - cam_left) * self.tile_size
+        player_screen_y = (player["y"] - cam_top) * self.tile_size
+        self.win.blit(self.player_image, (player_screen_x, player_screen_y))
 
         pygame.display.flip()
