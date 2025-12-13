@@ -1,5 +1,5 @@
-1. 
-2. 
-3. 
-4. 
+1. add different movement speeds for different creatures
+2. collect different creatures pngs
+3. following or fleeing from the player,awareness, flocking
+4. add different types creatures
 5. 
