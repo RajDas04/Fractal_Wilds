@@ -79,7 +79,12 @@ if USE_PYGAME == True: # Pygame
         new_y = player["y"]
 
         for c in creatures:
-            wander(c)
+            c["move_tick"] += 1
+
+            if c["move_tick"] >= c["speed"]:
+                wander(c)
+                c["move_tick"] = 0
+
 
         if keys[pygame.K_w] and player["y"] > 0:
             new_y -= 1
