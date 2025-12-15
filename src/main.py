@@ -85,7 +85,6 @@ if USE_PYGAME == True: # Pygame
                 wander(c)
                 c["move_tick"] = 0
 
-
         if keys[pygame.K_w] and player["y"] > 0:
             new_y -= 1
         if keys[pygame.K_s] and player["y"] < world.height - 1:

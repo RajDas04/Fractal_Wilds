@@ -3,16 +3,19 @@ from noise import gen_noise_map, classify, bio_
 
 SPECIES = {
     "rabbit": {
-        "color": (180, 255, 180),
-        "speed": 2
+        #color": (180, 255, 180),
+        "speed": 4
     },
     "wolf": {
-        "color": (200, 50, 50),
-        "speed": 1
+        #"color": (200, 50, 50),
+        "speed": 3
     },
     "turtle": {
-        "color": (60, 90, 130),
-        "speed": 5
+        #"color": (60, 90, 130),
+        "speed": 9
+    },
+    "sheep": {
+        "speed": 6
     }
 }
 
@@ -35,14 +38,14 @@ class World:
     
     def live_creature(self):
         creatures = []
-        for _ in range(50):
+        for _ in range(60):
             species_name = random.choice(list(SPECIES.keys()))
             species = SPECIES[species_name]
 
             creatures.append({
                 "x": random.randint(0, self.width - 1),
                 "y": random.randint(0, self.height - 1),
-                "color": species["color"],
+                #"color": species["color"],
                 "speed": species["speed"],
                 "move_tick": 0,
                 "species": species_name,

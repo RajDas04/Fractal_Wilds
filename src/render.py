@@ -25,6 +25,17 @@ class Renderer:
             pygame.image.load("data/assets/player_pixel.png").convert_alpha(), (self.tile_size, self.tile_size))
         for key in self.tile_images:
             self.tile_images[key]  = pygame.transform.scale(self.tile_images[key], (self.tile_size, self.tile_size))
+        
+        self.creature_images = {
+            "rabbit": pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel.png").convert_alpha(),
+                (self.tile_size, self.tile_size)),
+            "wolf": pygame.transform.scale( pygame.image.load("data/assets/wolf_pixel.png").convert_alpha(),
+                (self.tile_size, self.tile_size)),
+            "turtle": pygame.transform.scale(pygame.image.load("data/assets/turtle_pixel.png").convert_alpha(),
+                (self.tile_size, self.tile_size)),
+            "sheep": pygame.transform.scale(pygame.image.load("data/assets/sheep_pixel.png").convert_alpha(),
+                (self.tile_size, self.tile_size))
+        }
 
     def draw(self, world, player):
         self.win.fill((0,0,0))
@@ -48,7 +59,8 @@ class Renderer:
         for c in world.creatures:
             sx = (c["x"] - cam_left) * self.tile_size
             sy = (c["y"] - cam_top) * self.tile_size
-            pygame.draw.circle(self.win, c["color"], (sx + 12, sy + 12), 6)
+            sprite = self.creature_images[c["species"]]
+            self.win.blit(sprite, (sx, sy))
 
         player_screen_x = (player["x"] - cam_left) * self.tile_size
         player_screen_y = (player["y"] - cam_top) * self.tile_size
