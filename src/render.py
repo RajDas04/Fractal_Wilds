@@ -59,8 +59,7 @@ class Renderer:
         for c in world.creatures:
             sx = (c["x"] - cam_left) * self.tile_size
             sy = (c["y"] - cam_top) * self.tile_size
-            sprite = self.creature_images[c["species"]]
-            self.win.blit(sprite, (sx, sy))
+            self.win.blit(self.creature_images[c["species"]], (sx, sy))
 
         player_screen_x = (player["x"] - cam_left) * self.tile_size
         player_screen_y = (player["y"] - cam_top) * self.tile_size

@@ -6,12 +6,12 @@ import random
 
 world = World(250,250)
 player = {"x":25,"y":25,"symbol":"()"}
-view_width = 30
-view_height = 12
+view_width = 30 # used for ASCII
+view_height = 12 # used for ASCII
 
-TILE_SIZE = 30
-VIEW_WIDTH = 35
-VIEW_HEIGHT = 18
+TILE_SIZE = 30 # used for Pygame
+VIEW_WIDTH = 35 # used for Pygame
+VIEW_HEIGHT = 18 # used for Pygame
 
 USE_PYGAME = True  # change to True to use pygame and False to use terminal ASCII
 
@@ -61,7 +61,7 @@ if USE_PYGAME == True: # Pygame
         new_y = creature["y"] + dy
         if 0 <= new_x < world.width and 0 <= new_y < world.height:
             biome = world.map[new_y][new_x]
-            if biome not in ("water", "mountain"):
+            if biome in creature["allowed_biome"]:
                 creature["x"] = new_x
                 creature["y"] = new_y
 
