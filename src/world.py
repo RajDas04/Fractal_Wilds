@@ -42,13 +42,18 @@ class World:
         for _ in range(60):
             species_name = random.choice(list(SPECIES.keys()))
             species = SPECIES[species_name]
-            creatures.append({
-                "x": random.randint(0, self.width - 1),
-                "y": random.randint(0, self.height - 1),
-                "speed": species["speed"],
-                "move_tick": 0,
-                "species": species_name,
-                "behavior": "wander",
-                "allowed_biome": species["allowed_biome"]
-            })
+            while True:
+                x = random.randint(0, self.width - 1)
+                y = random.randint(0, self.height - 1)
+                if self.map[y][x] in species["allowed_biome"]:
+                    creatures.append({
+                        "x": x,
+                        "y": y,
+                        "speed": species["speed"],
+                        "move_tick": 0,
+                        "species": species_name,
+                        "behavior": "wander",
+                        "allowed_biome": species["allowed_biome"]
+                    })
+                    break
         return creatures

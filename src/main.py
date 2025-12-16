@@ -80,7 +80,6 @@ if USE_PYGAME == True: # Pygame
 
         for c in creatures:
             c["move_tick"] += 1
-
             if c["move_tick"] >= c["speed"]:
                 wander(c)
                 c["move_tick"] = 0
