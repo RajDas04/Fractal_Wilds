@@ -1,4 +1,12 @@
 # Design Choices:
+## Implemented
+-> creatures
+
+-> AI wandering
+
+-> Python/Pygame rendering layer
+
+## Yet to Implement:
 ### biome rules
 -> Water
 ##### can't walk on it
@@ -22,8 +30,6 @@
 -> Just redraw the current view each frame
 
 ### planned features
--> creatures
-
 -> simulation ticks
 
 -> inventory
@@ -36,10 +42,6 @@
 
 -> save/load multiple worlds
 
--> Python/Pygame rendering layer
-
--> AI wandering
-
 -> procedural villages
 
 -> erosion
@@ -49,6 +51,7 @@
 ### experiment results
 -> 
 
+## Code Layout:
 #### world.py → Store and Represent the World
 -> saving
 
