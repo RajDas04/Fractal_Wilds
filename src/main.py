@@ -83,6 +83,7 @@ if USE_PYGAME == True: # Pygame
             if c["move_tick"] >= c["speed"]:
                 wander(c)
                 c["move_tick"] = 0
+                c["anim_state"] = "walk"
 
         if keys[pygame.K_w] and player["y"] > 0:
             new_y -= 1

@@ -27,8 +27,18 @@ class Renderer:
             self.tile_images[key]  = pygame.transform.scale(self.tile_images[key], (self.tile_size, self.tile_size))
         
         self.creature_images = {
-            "rabbit": pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_idle.png").convert_alpha(),
-                (self.tile_size, self.tile_size)),
+            "rabbit": {
+                "idle":[
+                pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_idle.png").convert_alpha(),
+                (self.tile_size, self.tile_size))
+                ],
+                "walk":[
+                    pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_walk1.png").convert_alpha(),
+                        (self.tile_size, self.tile_size)),
+                    pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_walk2.png").convert_alpha(),
+                        (self.tile_size, self.tile_size))
+                ]
+            },
             "wolf": pygame.transform.scale( pygame.image.load("data/assets/wolf_pixel_idle.png").convert_alpha(),
                 (self.tile_size, self.tile_size)),
             "turtle": pygame.transform.scale(pygame.image.load("data/assets/turtle_pixel_idle.png").convert_alpha(),
@@ -59,7 +69,17 @@ class Renderer:
         for c in world.creatures:
             sx = (c["x"] - cam_left) * self.tile_size
             sy = (c["y"] - cam_top) * self.tile_size
-            self.win.blit(self.creature_images[c["species"]], (sx, sy))
+            d = self.creature_images[c["species"]]
+            if isinstance(d, dict):
+                frames = d[c["anim_state"]]
+                self.win.blit(frames[c["anim_frame"]], (sx, sy))
+                c["anim_frame"] = (c["anim_frame"] + 1) % len(frames)
+            else:
+                self.win.blit(d, (sx, sy))
+            # frames = self.creature_images[c["species"]][c["anim_state"]]
+            # self.win.blit(frames[c["anim_frame"]], (sx, sy))
+            # #self.win.blit(self.creature_images[c["species"]], (sx, sy))
+            # c["anim_frame"] = (c["anim_frame"] + 1) % len(frames)
 
         player_screen_x = (player["x"] - cam_left) * self.tile_size
         player_screen_y = (player["y"] - cam_top) * self.tile_size

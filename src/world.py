@@ -53,7 +53,9 @@ class World:
                         "move_tick": 0,
                         "species": species_name,
                         "behavior": "wander",
-                        "allowed_biome": species["allowed_biome"]
+                        "allowed_biome": species["allowed_biome"],
+                        "anim_state": "idle",
+                        "anim_frame": 0
                     })
                     break
         return creatures
