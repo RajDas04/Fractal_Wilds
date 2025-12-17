@@ -22,18 +22,18 @@ class Renderer:
             "mountain": pygame.image.load("data/assets/mountain_pixel.png").convert_alpha(),
         }
         self.player_image = pygame.transform.scale(
-            pygame.image.load("data/assets/player_pixel.png").convert_alpha(), (self.tile_size, self.tile_size))
+            pygame.image.load("data/assets/player_pixel_idle.png").convert_alpha(), (self.tile_size, self.tile_size))
         for key in self.tile_images:
             self.tile_images[key]  = pygame.transform.scale(self.tile_images[key], (self.tile_size, self.tile_size))
         
         self.creature_images = {
-            "rabbit": pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel.png").convert_alpha(),
+            "rabbit": pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_idle.png").convert_alpha(),
                 (self.tile_size, self.tile_size)),
-            "wolf": pygame.transform.scale( pygame.image.load("data/assets/wolf_pixel.png").convert_alpha(),
+            "wolf": pygame.transform.scale( pygame.image.load("data/assets/wolf_pixel_idle.png").convert_alpha(),
                 (self.tile_size, self.tile_size)),
-            "turtle": pygame.transform.scale(pygame.image.load("data/assets/turtle_pixel.png").convert_alpha(),
+            "turtle": pygame.transform.scale(pygame.image.load("data/assets/turtle_pixel_idle.png").convert_alpha(),
                 (self.tile_size, self.tile_size)),
-            "sheep": pygame.transform.scale(pygame.image.load("data/assets/sheep_pixel.png").convert_alpha(),
+            "sheep": pygame.transform.scale(pygame.image.load("data/assets/sheep_pixel_idle.png").convert_alpha(),
                 (self.tile_size, self.tile_size))
         }
 

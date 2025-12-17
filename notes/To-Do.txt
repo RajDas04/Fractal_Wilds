@@ -1,5 +1,5 @@
-1. add different movement speeds for different creatures
-2. collect different creatures pngs
-3. following or fleeing from the player,awareness, flocking
-4. add different types creatures
-5. 
+1. following or fleeing from the player,awareness, flocking
+2. add Predator–prey behavior (wolves hunt sheep)
+3. Evolution (mutation over generations)
+4. Reproduction + population dynamics
+5. Day/night affecting behavior
