@@ -29,8 +29,8 @@ class Renderer:
         self.creature_images = {
             "rabbit": {
                 "idle":[
-                pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_idle.png").convert_alpha(),
-                (self.tile_size, self.tile_size))
+                    pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_idle.png").convert_alpha(),
+                    (self.tile_size, self.tile_size))
                 ],
                 "walk":[
                     pygame.transform.scale(pygame.image.load("data/assets/rabbit_pixel_walk1.png").convert_alpha(),
@@ -39,12 +39,31 @@ class Renderer:
                         (self.tile_size, self.tile_size))
                 ]
             },
-            "wolf": pygame.transform.scale( pygame.image.load("data/assets/wolf_pixel_idle.png").convert_alpha(),
-                (self.tile_size, self.tile_size)),
+            "wolf": {
+                "idle":[
+                    pygame.transform.scale( pygame.image.load("data/assets/wolf_pixel_idle.png").convert_alpha(),
+                    (self.tile_size, self.tile_size))
+                ],
+                "walk":[
+                    pygame.transform.scale(pygame.image.load("data/assets/wolf_pixel_walk1.png").convert_alpha(),
+                        (self.tile_size, self.tile_size)),
+                    pygame.transform.scale(pygame.image.load("data/assets/wolf_pixel_walk2.png").convert_alpha(),
+                        (self.tile_size, self.tile_size))
+                ]
+            },
             "turtle": pygame.transform.scale(pygame.image.load("data/assets/turtle_pixel_idle.png").convert_alpha(),
                 (self.tile_size, self.tile_size)),
-            "sheep": pygame.transform.scale(pygame.image.load("data/assets/sheep_pixel_idle.png").convert_alpha(),
-                (self.tile_size, self.tile_size))
+            "sheep": {
+                "idle":[
+                    pygame.transform.scale(pygame.image.load("data/assets/sheep_pixel_idle.png").convert_alpha(),
+                (self.tile_size, self.tile_size))],
+                "walk":[
+                    pygame.transform.scale(pygame.image.load("data/assets/sheep_pixel_walk1.png").convert_alpha(),
+                        (self.tile_size, self.tile_size)),
+                    pygame.transform.scale(pygame.image.load("data/assets/sheep_pixel_walk2.png").convert_alpha(),
+                        (self.tile_size, self.tile_size))
+                ]
+            }
         }
 
     def draw(self, world, player):
@@ -55,12 +74,10 @@ class Renderer:
         for row in range(self.view_height):
             for col in range(self.view_width):
                 world_x = cam_left + col
-                world_y = cam_top + row
-                
+                world_y = cam_top + row               
                 if (world_x < 0 or world_x >= world.width or
                     world_y < 0 or world_y >= world.height):
                     continue
-
                 biome = world.map[world_y][world_x]
                 screen_x = col * self.tile_size
                 screen_y = row * self.tile_size
@@ -76,10 +93,6 @@ class Renderer:
                 c["anim_frame"] = (c["anim_frame"] + 1) % len(frames)
             else:
                 self.win.blit(d, (sx, sy))
-            # frames = self.creature_images[c["species"]][c["anim_state"]]
-            # self.win.blit(frames[c["anim_frame"]], (sx, sy))
-            # #self.win.blit(self.creature_images[c["species"]], (sx, sy))
-            # c["anim_frame"] = (c["anim_frame"] + 1) % len(frames)
 
         player_screen_x = (player["x"] - cam_left) * self.tile_size
         player_screen_y = (player["y"] - cam_top) * self.tile_size
