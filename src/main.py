@@ -55,15 +55,26 @@ if USE_PYGAME == False: # ASCII map
             cam_render()
 
 if USE_PYGAME == True: # Pygame 
+    def reset_animation(creature, new):
+        if creature["anim_state"] != new:
+            creature["anim_state"] = new
+            creature["anim_frame"] = 0
+
     def wander(creature):
         dx, dy = random.choice([(1,0),(-1,0),(0,1),(0,-1)]) # pick random direction
         new_x = creature["x"] + dx
         new_y = creature["y"] + dy
-        if 0 <= new_x < world.width and 0 <= new_y < world.height:
-            biome = world.map[new_y][new_x]
-            if biome in creature["allowed_biome"]:
-                creature["x"] = new_x
-                creature["y"] = new_y
+        if not (0 <= new_x < world.width and 0 <= new_y < world.height):
+            reset_animation(creature, "idle")
+            return False
+        biome = world.map[new_y][new_x]
+        if biome not in creature["allowed_biome"]:
+            reset_animation(creature, "idle")
+            return False
+        creature["x"] = new_x
+        creature["y"] = new_y
+        reset_animation(creature, "walk")
+        return True
 
     renderer = Renderer(TILE_SIZE, VIEW_WIDTH, VIEW_HEIGHT)  
     clock = pygame.time.Clock()
@@ -83,7 +94,6 @@ if USE_PYGAME == True: # Pygame
             if c["move_tick"] >= c["speed"]:
                 wander(c)
                 c["move_tick"] = 0
-                c["anim_state"] = "walk"
 
         if keys[pygame.K_w] and player["y"] > 0:
             new_y -= 1
