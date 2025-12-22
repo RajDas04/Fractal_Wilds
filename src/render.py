@@ -9,23 +9,32 @@ class Renderer:
         pygame.init()
         pygame.font.init()
         self.width = self.tile_size * self.view_width
-        self.height = self.tile_size * self.view_height
-        
+        self.height = self.tile_size * self.view_height       
         self.win = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Fractal Wilds")
         self.font = pygame.font.SysFont("rockwell", 20)
+
+        self.tile_animation_tick = 0
+        self.tile_animation_speed = 15
+        self.tile_animation_frame = 0
         self.tile_images = {
-            "water": pygame.image.load("data/assets/water_pixel.png").convert_alpha(),
-            "sand": pygame.image.load("data/assets/sand_pixel.png").convert_alpha(),
-            "grass": pygame.image.load("data/assets/grass_pixel.png").convert_alpha(),
-            "forest": pygame.image.load("data/assets/forest_pixel.png").convert_alpha(),
-            "mountain": pygame.image.load("data/assets/mountain_pixel.png").convert_alpha(),
+            "water":[
+                pygame.image.load("data/assets/water_pixel_0.png").convert_alpha(),
+                pygame.image.load("data/assets/water_pixel_1.png").convert_alpha(),
+                pygame.image.load("data/assets/water_pixel_2.png").convert_alpha()
+            ],
+            "sand": [pygame.image.load("data/assets/sand_pixel.png").convert_alpha()],
+            "grass": [pygame.image.load("data/assets/grass_pixel.png").convert_alpha()],
+            "forest": [pygame.image.load("data/assets/forest_pixel.png").convert_alpha()],
+            "mountain": [pygame.image.load("data/assets/mountain_pixel.png").convert_alpha()],
         }
+        for biome, frames in self.tile_images.items():
+            self.tile_images[biome] = [pygame.transform.scale(frame, (self.tile_size, self.tile_size))
+                                       for frame in frames]
+
         self.player_image = pygame.transform.scale(
             pygame.image.load("data/assets/player_pixel_idle.png").convert_alpha(), (self.tile_size, self.tile_size))
-        for key in self.tile_images:
-            self.tile_images[key]  = pygame.transform.scale(self.tile_images[key], (self.tile_size, self.tile_size))
-        
+
         self.creature_images = {
             "rabbit": {
                 "idle":[
@@ -70,6 +79,10 @@ class Renderer:
         self.win.fill((0,0,0))
         cam_left = player["x"] - self.view_width //2
         cam_top = player["y"] - self.view_height // 2
+        self.tile_animation_tick += 1
+        if self.tile_animation_tick >= self.tile_animation_speed:
+            self.tile_animation_tick = 0
+            self.tile_animation_frame += 1
 
         for row in range(self.view_height):
             for col in range(self.view_width):
@@ -81,7 +94,10 @@ class Renderer:
                 biome = world.map[world_y][world_x]
                 screen_x = col * self.tile_size
                 screen_y = row * self.tile_size
-                self.win.blit(self.tile_images[biome], (screen_x, screen_y))
+                frames = self.tile_images[biome]
+                frame = frames[self.tile_animation_frame % len(frames)]
+                self.win.blit(frame, (screen_x, screen_y))
+                #self.win.blit(self.tile_images[biome], (screen_x, screen_y))
 
         for c in world.creatures:
             sx = (c["x"] - cam_left) * self.tile_size
