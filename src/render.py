@@ -15,7 +15,7 @@ class Renderer:
         self.font = pygame.font.SysFont("rockwell", 20)
 
         self.tile_animation_tick = 0
-        self.tile_animation_speed = 15
+        self.tile_animation_speed = 5
         self.tile_animation_frame = 0
         self.tile_images = {
             "water":[
@@ -23,8 +23,16 @@ class Renderer:
                 pygame.image.load("data/assets/water_pixel_1.png").convert_alpha(),
                 pygame.image.load("data/assets/water_pixel_2.png").convert_alpha()
             ],
-            "sand": [pygame.image.load("data/assets/sand_pixel.png").convert_alpha()],
-            "grass": [pygame.image.load("data/assets/grass_pixel.png").convert_alpha()],
+            "sand":[
+                pygame.image.load("data/assets/sand_pixel_0.png").convert_alpha(),
+                pygame.image.load("data/assets/sand_pixel_1.png").convert_alpha(),
+                pygame.image.load("data/assets/sand_pixel_2.png").convert_alpha()
+            ],
+            "grass":[
+                pygame.image.load("data/assets/grass_pixel_0.png").convert_alpha(),
+                pygame.image.load("data/assets/grass_pixel_1.png").convert_alpha(),
+                pygame.image.load("data/assets/grass_pixel_2.png").convert_alpha()
+            ],
             "forest": [pygame.image.load("data/assets/forest_pixel.png").convert_alpha()],
             "mountain": [pygame.image.load("data/assets/mountain_pixel.png").convert_alpha()],
         }

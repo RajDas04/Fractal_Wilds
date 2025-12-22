@@ -1,31 +1,4 @@
 0. add terrain animations by more frames
-self.tile_sprites = {
-    "grass": [
-        load("grass_0.png"),
-        load("grass_1.png"),
-        load("grass_2.png")
-    ],
-    "water": [
-        load("water_0.png"),
-        load("water_1.png"),
-        load("water_2.png")
-    ],
-    "sand": [load("sand.png")],
-    "mountain": [load("mountain.png")]
-}
-self.tile_anim_tick = 0
-self.tile_anim_speed = 20  # frames between animation change
-self.tile_anim_frame = 0
-
-self.tile_anim_tick += 1
-if self.tile_anim_tick >= self.tile_anim_speed:
-    self.tile_anim_tick = 0
-    self.tile_anim_frame += 1
-
-frames = self.tile_sprites[biome]
-frame = frames[self.tile_anim_frame % len(frames)]
-self.win.blit(frame, (screen_x, screen_y))
-
 0.1. add animation timer to creatures
 1. following or fleeing from the player,awareness, flocking
 2. add Predator–prey behavior (wolves hunt sheep)
