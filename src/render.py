@@ -1,5 +1,4 @@
 import pygame
-from noise import bio_, player_
 
 class Renderer:
     def __init__(self, tile_size, view_width, view_height):
@@ -15,19 +14,16 @@ class Renderer:
         self.font = pygame.font.SysFont("rockwell", 20)
 
         self.tile_animation_tick = 0
-        self.tile_animation_speed = 5
+        self.tile_animation_speed = 6
         self.tile_animation_frame = 0
         self.tile_images = {
             "water":[
                 pygame.image.load("data/assets/water_pixel_0.png").convert_alpha(),
                 pygame.image.load("data/assets/water_pixel_1.png").convert_alpha(),
-                pygame.image.load("data/assets/water_pixel_2.png").convert_alpha()
+                pygame.image.load("data/assets/water_pixel_2.png").convert_alpha(),
+                pygame.image.load("data/assets/water_pixel_3.png").convert_alpha()
             ],
-            "sand":[
-                pygame.image.load("data/assets/sand_pixel_0.png").convert_alpha(),
-                pygame.image.load("data/assets/sand_pixel_1.png").convert_alpha(),
-                pygame.image.load("data/assets/sand_pixel_2.png").convert_alpha()
-            ],
+            "sand": [pygame.image.load("data/assets/sand_pixel.png").convert_alpha()],
             "grass":[
                 pygame.image.load("data/assets/grass_pixel_0.png").convert_alpha(),
                 pygame.image.load("data/assets/grass_pixel_1.png").convert_alpha(),
@@ -105,7 +101,6 @@ class Renderer:
                 frames = self.tile_images[biome]
                 frame = frames[self.tile_animation_frame % len(frames)]
                 self.win.blit(frame, (screen_x, screen_y))
-                #self.win.blit(self.tile_images[biome], (screen_x, screen_y))
 
         for c in world.creatures:
             sx = (c["x"] - cam_left) * self.tile_size
