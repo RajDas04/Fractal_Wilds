@@ -1,4 +1,3 @@
-0. add terrain animations by more frames
 0.1. add animation timer to creatures
 1. following or fleeing from the player,awareness, flocking
 2. add Predator–prey behavior (wolves hunt sheep)

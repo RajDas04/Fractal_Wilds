@@ -13,9 +13,10 @@ class Renderer:
         pygame.display.set_caption("Fractal Wilds")
         self.font = pygame.font.SysFont("rockwell", 20)
 
-        self.tile_animation_tick = 0
-        self.tile_animation_speed = 6
-        self.tile_animation_frame = 0
+        self.animation_tick = 0
+        self.animation_speed = 6
+        self.animation_frame = 0
+
         self.tile_images = {
             "water":[
                 pygame.image.load("data/assets/water_pixel_0.png").convert_alpha(),
@@ -83,35 +84,42 @@ class Renderer:
         self.win.fill((0,0,0))
         cam_left = player["x"] - self.view_width //2
         cam_top = player["y"] - self.view_height // 2
-        self.tile_animation_tick += 1
-        if self.tile_animation_tick >= self.tile_animation_speed:
-            self.tile_animation_tick = 0
-            self.tile_animation_frame += 1
+        
+        while True: # tile section
+            self.animation_tick += 1
+            if self.animation_tick >= self.animation_speed:
+                self.animation_tick = 0
+                self.animation_frame += 1
+            for row in range(self.view_height):
+                for col in range(self.view_width):
+                    world_x = cam_left + col
+                    world_y = cam_top + row               
+                    if (world_x < 0 or world_x >= world.width or
+                        world_y < 0 or world_y >= world.height):
+                        continue
+                    biome = world.map[world_y][world_x]
+                    screen_x = col * self.tile_size
+                    screen_y = row * self.tile_size
+                    frames = self.tile_images[biome]
+                    frame_gen = frames[self.animation_frame % len(frames)]
+                    self.win.blit(frame_gen, (screen_x, screen_y))
+            break
 
-        for row in range(self.view_height):
-            for col in range(self.view_width):
-                world_x = cam_left + col
-                world_y = cam_top + row               
-                if (world_x < 0 or world_x >= world.width or
-                    world_y < 0 or world_y >= world.height):
-                    continue
-                biome = world.map[world_y][world_x]
-                screen_x = col * self.tile_size
-                screen_y = row * self.tile_size
-                frames = self.tile_images[biome]
-                frame = frames[self.tile_animation_frame % len(frames)]
-                self.win.blit(frame, (screen_x, screen_y))
-
-        for c in world.creatures:
-            sx = (c["x"] - cam_left) * self.tile_size
-            sy = (c["y"] - cam_top) * self.tile_size
-            d = self.creature_images[c["species"]]
-            if isinstance(d, dict):
-                frames = d[c["anim_state"]]
-                self.win.blit(frames[c["anim_frame"]], (sx, sy))
-                c["anim_frame"] = (c["anim_frame"] + 1) % len(frames)
-            else:
-                self.win.blit(d, (sx, sy))
+        while True: # creature section
+            for c in world.creatures:
+                sx = (c["x"] - cam_left) * self.tile_size
+                sy = (c["y"] - cam_top) * self.tile_size
+                d = self.creature_images[c["species"]]
+                if isinstance(d, dict):
+                    frames = d[c["anim_state"]]
+                    self.win.blit(frames[c["anim_frame"]], (sx, sy))
+                    c["anim_tick"] += 1
+                    if c["anim_tick"] >= c["anim_delay"]:
+                        c["anim_tick"] = 0
+                        c["anim_frame"] = (c["anim_frame"] + 1) % len(frames)
+                else:
+                    self.win.blit(d, (sx, sy))
+            break
 
         player_screen_x = (player["x"] - cam_left) * self.tile_size
         player_screen_y = (player["y"] - cam_top) * self.tile_size

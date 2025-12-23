@@ -4,19 +4,23 @@ from noise import gen_noise_map, classify, bio_
 SPECIES = {
     "rabbit": {
         "speed": 4,
-        "allowed_biome": {"forest", "grass"}
+        "allowed_biome": {"forest", "grass"},
+        "anim_delay": 2
     },
     "wolf": {
-        "speed": 3,
-        "allowed_biome": {"forest", "grass", "mountain", "sand"}
+        "speed": 5,
+        "allowed_biome": {"forest", "grass", "mountain", "sand"},
+        "anim_delay": 3
     },
     "turtle": {
         "speed": 9,
-        "allowed_biome": {"sand", "water"}
+        "allowed_biome": {"sand", "water"},
+        "anim_delay": 10
     },
     "sheep": {
-        "speed": 6,
-        "allowed_biome": {"forest", "grass"}
+        "speed": 7,
+        "allowed_biome": {"forest", "grass"},
+        "anim_delay": 4
     }
 }
 
@@ -39,13 +43,13 @@ class World:
     
     def live_creature(self):
         creatures = []
-        for _ in range(60):
+        for _ in range(80):
             species_name = random.choice(list(SPECIES.keys()))
             species = SPECIES[species_name]
             while True:
                 x = random.randint(0, self.width - 1)
                 y = random.randint(0, self.height - 1)
-                if self.map[y][x] in species["allowed_biome"]:
+                if self.map[y][x] in species["allowed_biome"]: # spwaning
                     creatures.append({
                         "x": x,
                         "y": y,
@@ -55,7 +59,9 @@ class World:
                         "behavior": "wander",
                         "allowed_biome": species["allowed_biome"],
                         "anim_state": "idle",
-                        "anim_frame": 0
+                        "anim_frame": 0,
+                        "anim_tick": 0,
+                        "anim_delay": species["anim_delay"]
                     })
                     break
         return creatures
