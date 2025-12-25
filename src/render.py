@@ -13,10 +13,6 @@ class Renderer:
         pygame.display.set_caption("Fractal Wilds")
         self.font = pygame.font.SysFont("rockwell", 20)
 
-        self.animation_tick = 0
-        self.animation_speed = 6
-        self.animation_frame = 0
-
         # the environment tiles render
         self.tile_images = {
             "water":[
@@ -35,8 +31,8 @@ class Renderer:
             "mountain": [pygame.image.load("data/assets/mountain_pixel.png").convert_alpha()],
         }
         self.tile_anime_delay = {
-            "water": 10,
-            "grass": 25,
+            "water": 8,
+            "grass": 15,
             "sand": None,
             "mountain": None
         }
@@ -45,13 +41,6 @@ class Renderer:
         for biome, frames in self.tile_images.items():
             self.tile_images[biome] = [pygame.transform.scale(frame, (self.tile_size, self.tile_size))
                                        for frame in frames]
-            delay = self.tile_anime_delay.get(biome)
-            if delay is None or len(frames) == 1:
-                continue
-        self.animation_tick[biome] += 1
-        if self.animation_tick[biome] >= delay:
-            self.animation_tick[biome] = 0
-            self.animation_frame[biome] += 1
         
         # the player render
         self.player_image = pygame.transform.scale(
@@ -102,6 +91,14 @@ class Renderer:
         self.win.fill((0,0,0))
         cam_left = player["x"] - self.view_width //2
         cam_top = player["y"] - self.view_height // 2
+        for biome, frames in self.tile_images.items():
+            delay = self.tile_anime_delay.get(biome)
+            if delay is None or len(frames) == 1:
+                continue
+            self.animation_tick[biome] += 1
+            if self.animation_tick[biome] >= delay:
+                self.animation_tick[biome] = 0
+                self.animation_frame[biome] += 1
         
         while True: # tile section
             for row in range(self.view_height):
@@ -116,7 +113,7 @@ class Renderer:
                     screen_y = row * self.tile_size
                     frames = self.tile_images[biome]
                     frame_gen = frames[self.animation_frame[biome] % len(frames)]
-                    self.win.blit(frames[frame_gen], (screen_x, screen_y))
+                    self.win.blit(frame_gen, (screen_x, screen_y))
             break
 
         while True: # creature section
