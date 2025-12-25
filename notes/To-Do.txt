@@ -1,6 +1,17 @@
-0.1. add animation timer to creatures
 1. following or fleeing from the player,awareness, flocking
 2. add Predator–prey behavior (wolves hunt sheep)
 3. Evolution (mutation over generations)
 4. Reproduction + population dynamics
 5. Day/night affecting behavior
+6. Terrain-focused
+Grass reacts to footsteps
+Directional water flow illusion
+Seasonal palette shifts
+Creature-focused
+Layer 2: animation speed per species
+Directional sprites (left/right/up/down)
+Predator–prey behavior
+World-simulation
+Population density limits per biome
+Reproduction & death
+Migration between biomes

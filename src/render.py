@@ -17,6 +17,7 @@ class Renderer:
         self.animation_speed = 6
         self.animation_frame = 0
 
+        # the environment tiles render
         self.tile_images = {
             "water":[
                 pygame.image.load("data/assets/water_pixel_0.png").convert_alpha(),
@@ -33,13 +34,30 @@ class Renderer:
             "forest": [pygame.image.load("data/assets/forest_pixel.png").convert_alpha()],
             "mountain": [pygame.image.load("data/assets/mountain_pixel.png").convert_alpha()],
         }
+        self.tile_anime_delay = {
+            "water": 10,
+            "grass": 25,
+            "sand": None,
+            "mountain": None
+        }
+        self.animation_tick = {biome: 0 for biome in self.tile_images}
+        self.animation_frame = {biome: 0 for biome in self.tile_images}
         for biome, frames in self.tile_images.items():
             self.tile_images[biome] = [pygame.transform.scale(frame, (self.tile_size, self.tile_size))
                                        for frame in frames]
-
+            delay = self.tile_anime_delay.get(biome)
+            if delay is None or len(frames) == 1:
+                continue
+        self.animation_tick[biome] += 1
+        if self.animation_tick[biome] >= delay:
+            self.animation_tick[biome] = 0
+            self.animation_frame[biome] += 1
+        
+        # the player render
         self.player_image = pygame.transform.scale(
             pygame.image.load("data/assets/player_pixel_idle.png").convert_alpha(), (self.tile_size, self.tile_size))
 
+        # the creatures render
         self.creature_images = {
             "rabbit": {
                 "idle":[
@@ -86,10 +104,6 @@ class Renderer:
         cam_top = player["y"] - self.view_height // 2
         
         while True: # tile section
-            self.animation_tick += 1
-            if self.animation_tick >= self.animation_speed:
-                self.animation_tick = 0
-                self.animation_frame += 1
             for row in range(self.view_height):
                 for col in range(self.view_width):
                     world_x = cam_left + col
@@ -101,8 +115,8 @@ class Renderer:
                     screen_x = col * self.tile_size
                     screen_y = row * self.tile_size
                     frames = self.tile_images[biome]
-                    frame_gen = frames[self.animation_frame % len(frames)]
-                    self.win.blit(frame_gen, (screen_x, screen_y))
+                    frame_gen = frames[self.animation_frame[biome] % len(frames)]
+                    self.win.blit(frames[frame_gen], (screen_x, screen_y))
             break
 
         while True: # creature section
